@@ -1,14 +1,29 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+#[derive(::bon::Builder)]
+pub struct Task {
+    pub id: TaskId,
+    pub description: TaskDescription,
+    pub status: TaskStatus,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub type TaskId = Snowflake;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#[derive(::bon::Builder)]
+pub struct TaskDescription {
+    value: ::std::borrow::Cow<'static, str>,
 }
+
+#[derive(::core::default::Default)]
+pub enum TaskStatus {
+    #[default]
+    Pending,
+    InProgress,
+    Completed,
+}
+
+pub struct Snowflake {
+    // also guide on this, builder(with ...)
+}
+
+// use chronos instead
+pub type Timestamp = ::std::time::SystemTime;
+pub type Interval = ::std::time::Duration;
