@@ -1,5 +1,5 @@
 [package]
-name = "wasm"
+name = "wasm-bindings"
 version = "0.1.0"
 edition.workspace = true
 license.workspace = true
@@ -7,7 +7,7 @@ repository.workspace = true
 publish.workspace = true
 
 [dependencies]
-wasm-bindgen = "0.2.103"
+wasm-bindgen = "=0.2.102"  # jsr:@deno/wasmbuild@0.19.3
 
 [lib]
 crate-type = ["cdylib"]

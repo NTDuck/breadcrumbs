@@ -1,6 +1,6 @@
 [workspace]
 members = [
-    "bindings/*",
+    "backend/bindings/*",
 ]
 resolver = "2"
 
