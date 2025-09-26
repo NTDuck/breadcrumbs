@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev-svelte": "cd ./frontend/svelte &&  dev --open",
+    "dev-svelte": "cd ./frontend/svelte && deno task dev --open",
     "dev-sv": "deno task dev-svelte",
     // "wasmbuild": "deno run -A jsr:@deno/wasmbuild@0.19.3 --project wasm-bindings --out ./backend/bindings/wasm-bindings-output"
     "wasmbuild": "wasm-pack build ./backend/bindings/wasm-bindings --out-dir ../output --out-name breadcrumbs --target deno"
