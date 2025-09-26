@@ -2,7 +2,7 @@
 	import "../app.css";
 	import favicon from "$lib/assets/favicon.svg";
 
-	import { addTwoNumbers } from "../../../../backend/bindings/wasm-bindings-output/wasm_bindings";
+	import { addTwoNumbers } from "../../../../backend/bindings/output/breadcrumbs";
 
 	const sum = addTwoNumbers(1, 2);
 
