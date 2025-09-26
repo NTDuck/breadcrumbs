@@ -162,5 +162,5 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 
-# wasmbuild output
-wasm-bindings-output/
+# wasm-pack output
+./backend/bindings/output/

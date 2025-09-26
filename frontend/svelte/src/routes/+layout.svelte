@@ -2,7 +2,7 @@
 	import "../app.css";
 	import favicon from "$lib/assets/favicon.svg";
 
-	import { addTwoNumbers } from "../../../../backend/bindings/output/breadcrumbs";
+	import { addTwoNumbers } from "$lib";
 
 	const sum = addTwoNumbers(1, 2);
 
@@ -12,10 +12,5 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
-
-<div class="container mx-auto">
-	<h1 class="text-3xl font-bold underline">Hello world!</h1>
-	<p>1 + 2 = {sum}</p>
-</div>
 
 {@render children?.()}

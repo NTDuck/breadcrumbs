@@ -2,6 +2,9 @@
 members = [
     "./bindings/*",
 ]
+exclude = [
+    "./bindings/output",
+]
 resolver = "2"
 
 [workspace.package]
@@ -24,3 +27,9 @@ publish = false
 
 [workspace.metadata.rust-analyzer]
 # See: https://rust-analyzer.github.io/book/diagnostics.html
+
+[profile.release]
+codegen-units = 1
+incremental = true
+lto = true
+opt-level = "z"
