@@ -2,10 +2,6 @@
 	import "../app.css";
 	import favicon from "$lib/assets/favicon.svg";
 
-	import { addTwoNumbers } from "$lib";
-
-	const sum = addTwoNumbers(1, 2);
-
 	let { children } = $props();
 </script>
 

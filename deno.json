@@ -1,7 +1,14 @@
 {
+  "fmt": {
+    "options": {
+      "useTabs": false,
+      "singleQuote": false
+    }
+  },
   "tasks": {
     "dev-svelte": "cd ./frontend/svelte && deno task dev",
     "dev-sv": "deno task dev-svelte",
+    
     "bind-wasm": "wasm-pack build ./backend/bindings/wasm-bindings --out-dir ../output --out-name breadcrumbs --target deno"
   },
   "imports": {
