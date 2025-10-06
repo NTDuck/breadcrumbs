@@ -14,8 +14,10 @@
 		"lint": "prettier --check . && eslint ."
 	},
 	"dependencies": {
+		"@fontsource-variable/alegreya": "^5.2.8",
 		"@skeletonlabs/skeleton": "^3.2.2",
-		"@skeletonlabs/skeleton-svelte": "^1.5.3"
+		"@skeletonlabs/skeleton-svelte": "^1.5.3",
+		"lucide-svelte": "^0.544.0"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",

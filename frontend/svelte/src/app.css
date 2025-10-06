@@ -1,7 +1,11 @@
 @import "tailwindcss";
 
+/* https://www.skeleton.dev/docs/get-started/installation/sveltekit */
 @import "@skeletonlabs/skeleton";
 @import "@skeletonlabs/skeleton/optional/presets";
-@import "@skeletonlabs/skeleton/themes/cerberus";
+@import "@skeletonlabs/skeleton/themes/nosh";
 
 @source "../node_modules/@skeletonlabs/skeleton-svelte/dist";
+
+/* https://fontsource.org/fonts/alegreya/install */
+@import "@fontsource-variable/alegreya";

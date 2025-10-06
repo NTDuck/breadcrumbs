@@ -3,6 +3,7 @@
   "specifiers": {
     "npm:@eslint/compat@^1.2.5": "1.3.2_eslint@9.35.0",
     "npm:@eslint/js@^9.22.0": "9.35.0",
+    "npm:@fontsource-variable/alegreya@^5.2.8": "5.2.8",
     "npm:@skeletonlabs/skeleton-svelte@^1.5.3": "1.5.3_svelte@5.38.10__acorn@8.15.0",
     "npm:@skeletonlabs/skeleton@^3.2.2": "3.2.2_tailwindcss@4.1.13",
     "npm:@sveltejs/adapter-auto@6": "6.1.0_@sveltejs+kit@2.41.0__@sveltejs+vite-plugin-svelte@6.2.0___svelte@5.38.10____acorn@8.15.0___vite@7.1.5____@types+node@24.5.0____picomatch@4.0.3___@types+node@24.5.0__svelte@5.38.10___acorn@8.15.0__vite@7.1.5___@types+node@24.5.0___picomatch@4.0.3__acorn@8.15.0__@types+node@24.5.0_@sveltejs+vite-plugin-svelte@6.2.0__svelte@5.38.10___acorn@8.15.0__vite@7.1.5___@types+node@24.5.0___picomatch@4.0.3__@types+node@24.5.0_svelte@5.38.10__acorn@8.15.0_vite@7.1.5__@types+node@24.5.0__picomatch@4.0.3_@types+node@24.5.0",
@@ -14,6 +15,7 @@
     "npm:eslint-plugin-svelte@3": "3.12.3_eslint@9.35.0_svelte@5.38.10__acorn@8.15.0_postcss@8.5.6",
     "npm:eslint@^9.22.0": "9.35.0",
     "npm:globals@16": "16.4.0",
+    "npm:lucide-svelte@0.544": "0.544.0_svelte@5.38.10__acorn@8.15.0",
     "npm:prettier-plugin-svelte@^3.3.3": "3.4.0_prettier@3.6.2_svelte@5.38.10__acorn@8.15.0",
     "npm:prettier-plugin-tailwindcss@~0.6.11": "0.6.14_prettier@3.6.2_prettier-plugin-svelte@3.4.0__prettier@3.6.2__svelte@5.38.10___acorn@8.15.0_svelte@5.38.10__acorn@8.15.0",
     "npm:prettier@^3.4.2": "3.6.2",
@@ -252,6 +254,9 @@
     },
     "@floating-ui/utils@0.2.10": {
       "integrity": "sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ=="
+    },
+    "@fontsource-variable/alegreya@5.2.8": {
+      "integrity": "sha512-gQcIA7j76KYTOcdkfo1Xee9xLBi5mya4qTkzlgeoHf9SjOL/gJj5GSSOg/7ba/ciUU18K92i7VGxXzFhDsowGg=="
     },
     "@humanfs/core@0.19.1": {
       "integrity": "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="
@@ -1587,6 +1592,12 @@
     "lodash.merge@4.6.2": {
       "integrity": "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ=="
     },
+    "lucide-svelte@0.544.0_svelte@5.38.10__acorn@8.15.0": {
+      "integrity": "sha512-8kBxSivf8SJdEUJRHBpu9bRw0S/qfVK+Yfb92KQnRRBdP425RzT6aQfrIfZctG1oucPVTBQe1ZXgmth/3qVICg==",
+      "dependencies": [
+        "svelte"
+      ]
+    },
     "magic-string@0.30.19": {
       "integrity": "sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==",
       "dependencies": [
@@ -2020,6 +2031,7 @@
       "dependencies": [
         "npm:@eslint/compat@^1.2.5",
         "npm:@eslint/js@^9.22.0",
+        "npm:@fontsource-variable/alegreya@^5.2.8",
         "npm:@skeletonlabs/skeleton-svelte@^1.5.3",
         "npm:@skeletonlabs/skeleton@^3.2.2",
         "npm:@sveltejs/adapter-auto@6",
@@ -2031,6 +2043,7 @@
         "npm:eslint-plugin-svelte@3",
         "npm:eslint@^9.22.0",
         "npm:globals@16",
+        "npm:lucide-svelte@0.544",
         "npm:prettier-plugin-svelte@^3.3.3",
         "npm:prettier-plugin-tailwindcss@~0.6.11",
         "npm:prettier@^3.4.2",

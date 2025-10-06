@@ -1,5 +1,8 @@
 [workspace]
 members = [
+    "./core/domain",
+    "./core/use-cases",
+    "./infrastructures",
     "./bindings/*",
 ]
 exclude = [
@@ -15,6 +18,8 @@ publish = false
 
 [workspace.dependencies]
 # Cross-cutting concerns, centralized
+async-trait = "0.1.89"
+bon = "3.8.0"
 
 # Crates that we choose to marry
 # See: https://blessed.rs/crates
