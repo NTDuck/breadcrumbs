@@ -18,8 +18,10 @@ publish = false
 
 [workspace.dependencies]
 # Cross-cutting concerns, centralized
+anyhow = "1.0.100"
 async-trait = "0.1.89"
 bon = "3.8.0"
+chrono = "0.4.42"
 
 # Crates that we choose to marry
 # See: https://blessed.rs/crates
@@ -34,6 +36,7 @@ bon = "3.8.0"
 # See: https://rust-analyzer.github.io/book/diagnostics.html
 
 [profile.release]
+# `wasm-bindgen`
 codegen-units = 1
 incremental = true
 lto = true

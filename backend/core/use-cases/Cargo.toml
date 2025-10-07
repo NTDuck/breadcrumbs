@@ -9,8 +9,10 @@ publish.workspace = true
 [dependencies]
 domain = { path = "../domain" }
 
+anyhow = { workspace = true }
 async-trait = { workspace = true }
 bon = { workspace = true }
+chrono = { workspace = true }
 
 [lints]
 workspace = true

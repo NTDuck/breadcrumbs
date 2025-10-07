@@ -3,6 +3,7 @@
 
 // Implicit requirement is that Uuid 
 #[derive(::bon::Builder)]
+#[builder(const)]
 pub struct Uuid {
     value: [u8; 16],
 }
@@ -32,7 +33,7 @@ impl TaskDescription {
                 let trimmed = value.trim();
 
                 if trimmed.len() == value.len() {
-                    ::std::borrow::Cow::Borrowed(value)
+                    ::std::borrow::Cow::Borrowed(trimmed)
                 } else {
                     ::std::borrow::Cow::Owned(trimmed.to_string())
                 }
@@ -47,14 +48,14 @@ impl TaskDescription {
     }
 
     fn validate(value: ::std::borrow::Cow<'static, str>) -> ::core::result::Result<::std::borrow::Cow<'static, str>, TaskDescriptionError> {
-        if (value.len() as u64) < Self::MIN_EXPECTED_LENGTH {
+        if value.len() < Self::MIN_EXPECTED_LENGTH {
             ::core::result::Result::Err(TaskDescriptionError::LengthUnderflow {
-                actual: value.len() as u64,
+                actual: value.len() as usize,
                 min_expected: Self::MIN_EXPECTED_LENGTH,
             })
-        } else if (value.len() as u64) > Self::MAX_EXPECTED_LENGTH {
+        } else if value.len() > Self::MAX_EXPECTED_LENGTH {
             ::core::result::Result::Err(TaskDescriptionError::LengthOverflow {
-                actual: value.len() as u64,
+                actual: value.len() as usize,
                 max_expected: Self::MAX_EXPECTED_LENGTH,
             })
         } else {
@@ -62,18 +63,18 @@ impl TaskDescription {
         }
     }
 
-    const MIN_EXPECTED_LENGTH: u64 = 1;
-    const MAX_EXPECTED_LENGTH: u64 = 1024;
+    const MIN_EXPECTED_LENGTH: usize = 1;
+    const MAX_EXPECTED_LENGTH: usize = 1024;
 }
 
 pub enum TaskDescriptionError {
     LengthUnderflow {
-        actual: u64,
-        min_expected: u64,
+        actual: usize,
+        min_expected: usize,
     },
     LengthOverflow {
-        actual: u64,
-        max_expected: u64,
+        actual: usize,
+        max_expected: usize,
     },
 }
 
