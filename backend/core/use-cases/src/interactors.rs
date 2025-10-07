@@ -39,6 +39,13 @@ impl CreateTaskBoundary for CreateTaskInteractor {
 pub struct ViewTasksInteractor {
     task_repository: ::std::sync::Arc<dyn TaskRepository + ::core::marker::Send + ::core::marker::Sync>,
 
+    #[builder(with = |
+        uuid_generator: ::std::sync::Arc<dyn UuidGenerator + ::core::marker::Send + ::core::marker::Sync>,
+        uuid_formatter: ::std::sync::Arc<dyn UuidFormatter + ::core::marker::Send + ::core::marker::Sync>,
+    | ::std::sync::Arc::new(models::TaskAssembler::builder()
+        .uuid_generator(::std::sync::Arc::clone(&uuid_generator))
+        .uuid_formatter(::std::sync::Arc::clone(&uuid_formatter))
+        .build()))]
     task_assembler: ::std::sync::Arc<models::TaskAssembler>,
 }
 

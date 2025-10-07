@@ -5,7 +5,7 @@ pub mod aliases {
 
     pub mod time {
         pub type Timestamp = ::chrono::NaiveDateTime;
-        pub type Interval = ::chrono::Duration;
+        // pub type Interval = ::chrono::Duration;
     }
 
     pub mod string {
