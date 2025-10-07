@@ -1,22 +1,5 @@
-pub mod aliases {
-    pub mod result {
-        pub type Fallible<T = ()> = ::core::result::Result<T, ::anyhow::Error>;
-    }
-
-    pub mod time {
-        pub type Timestamp = ::chrono::NaiveDateTime;
-        // pub type Interval = ::chrono::Duration;
-    }
-
-    pub mod string {
-        pub type String = ::std::borrow::Cow<'static, str>;
-    }
-}
-
 pub mod pagination {
     use ::futures::prelude::*;
-
-    use crate::utils::aliases;
 
     #[derive(::bon::Builder)]
     #[builder(const)]
@@ -53,10 +36,10 @@ pub mod pagination {
     where
         Items: ::core::iter::IntoIterator<Item = Item>,
     {
-        pub async fn map<Mapper, Future, MappedItem, MappedItems>(self, mut mapper: Mapper) -> aliases::result::Fallible<PaginationResponse<MappedItem, MappedItems>>
+        pub async fn map<Mapper, Future, MappedItem, MappedItems>(self, mut mapper: Mapper) -> ::aliases::result::Fallible<PaginationResponse<MappedItem, MappedItems>>
         where
             Mapper: ::core::ops::FnMut(Item) -> Future,
-            Future: ::core::future::Future<Output = aliases::result::Fallible<MappedItem>>,
+            Future: ::core::future::Future<Output = ::aliases::result::Fallible<MappedItem>>,
             MappedItems: ::core::default::Default + ::core::iter::Extend<MappedItem> + ::core::iter::FromIterator<MappedItem> + ::core::iter::IntoIterator<Item = MappedItem>,
         {
             let response = PaginationResponse {
@@ -71,7 +54,7 @@ pub mod pagination {
                 max_page_number: self.max_page_number,
             };
 
-            aliases::result::Fallible::Ok(response)
+            ::aliases::result::Fallible::Ok(response)
         }
     }
 

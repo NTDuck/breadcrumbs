@@ -1,17 +1,16 @@
 use ::async_trait::async_trait;
 
 use crate::utils::{pagination::{PaginationRequest, PaginationResponse}};
-use crate::utils::aliases;
 
 #[async_trait]
 pub trait CreateTaskBoundary: ::core::marker::Send + ::core::marker::Sync {
-    async fn apply(self: ::std::sync::Arc<Self>, request: CreateTaskRequest) -> aliases::result::Fallible<CreateTaskResponse>;
+    async fn apply(self: ::std::sync::Arc<Self>, request: CreateTaskRequest) -> ::aliases::result::Fallible<CreateTaskResponse>;
 }
 
 #[derive(::bon::Builder)]
 #[builder(on(_, into))]
 pub struct CreateTaskRequest {
-    pub task_description: aliases::string::String,
+    pub task_description: ::aliases::string::String,
 }
 
 pub type CreateTaskResponse = ::core::result::Result<CreateTaskOkResponse, CreateTaskErrResponse>;
@@ -42,7 +41,7 @@ impl ::core::convert::From<::domain::TaskDescriptionError> for CreateTaskErrResp
 
 #[async_trait]
 pub trait ViewTasksBoundary: ::core::marker::Send + ::core::marker::Sync {
-    async fn apply(self: ::std::sync::Arc<Self>, request: ViewTasksRequest) -> aliases::result::Fallible<ViewTasksResponse>;
+    async fn apply(self: ::std::sync::Arc<Self>, request: ViewTasksRequest) -> ::aliases::result::Fallible<ViewTasksResponse>;
 }
 
 #[derive(::bon::Builder)]
@@ -57,16 +56,16 @@ pub struct ViewTasksResponse {
 }
 
 pub mod models {
-    use crate::{gateways::{UuidFormatter, UuidGenerator}, utils::aliases};
+    use crate::{gateways::{UuidFormatter, UuidGenerator}};
 
     #[derive(::bon::Builder)]
-    #[builder(on(aliases::string::String, into))]
+    #[builder(on(::aliases::string::String, into))]
     pub struct Task {
-        pub id: aliases::string::String,
-        pub description: aliases::string::String,
+        pub id: ::aliases::string::String,
+        pub description: ::aliases::string::String,
         pub status: TaskStatus,
 
-        pub created_at: aliases::time::Timestamp,
+        pub created_at: ::aliases::time::Timestamp,
     }
 
     #[derive(::bon::Builder)]
@@ -76,7 +75,7 @@ pub mod models {
     }
 
     impl TaskAssembler {
-        pub(crate) async fn assemble(self: ::std::sync::Arc<Self>, task: ::domain::Task) -> aliases::result::Fallible<Task> {
+        pub(crate) async fn assemble(self: ::std::sync::Arc<Self>, task: ::domain::Task) -> ::aliases::result::Fallible<Task> {
             let task = Task::builder()
                 .id(::std::sync::Arc::clone(&self.uuid_formatter).format(&task.id).await?)
                 .description(task.description.clone())
@@ -84,7 +83,7 @@ pub mod models {
                 .created_at(::std::sync::Arc::clone(&self.uuid_generator).get_timestamp(&task.id).await?)
                 .build();
 
-            aliases::result::Fallible::Ok(task)
+            ::aliases::result::Fallible::Ok(task)
         }
     }
 

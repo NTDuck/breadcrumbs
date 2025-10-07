@@ -3,6 +3,14 @@
 version = 4
 
 [[package]]
+name = "aliases"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+]
+
+[[package]]
 name = "android_system_properties"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -139,6 +147,7 @@ dependencies = [
 name = "domain"
 version = "0.1.0"
 dependencies = [
+ "aliases",
  "bon",
 ]
 
@@ -276,6 +285,14 @@ checksum = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39"
 [[package]]
 name = "infrastructures"
 version = "0.1.0"
+dependencies = [
+ "aliases",
+ "async-trait",
+ "bon",
+ "chrono",
+ "domain",
+ "use-cases",
+]
 
 [[package]]
 name = "js-sys"
@@ -405,10 +422,9 @@ checksum = "f63a545481291138910575129486daeaf8ac54aee4387fe7906919f7830c7d9d"
 name = "use-cases"
 version = "0.1.0"
 dependencies = [
- "anyhow",
+ "aliases",
  "async-trait",
  "bon",
- "chrono",
  "domain",
  "futures",
 ]

@@ -2,4 +2,4 @@ pub mod boundaries;
 pub mod gateways;
 pub mod interactors;
 
-mod utils;
+pub mod utils;

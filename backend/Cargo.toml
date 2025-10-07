@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "./aliases",
     "./core/domain",
     "./core/use-cases",
     "./infrastructures",

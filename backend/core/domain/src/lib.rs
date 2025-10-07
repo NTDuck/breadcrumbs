@@ -1,11 +1,3 @@
-use crate::utils::aliases;
-
-mod utils;
-
-// Note that derived traits will be added when needed
-// Do not repeat axiom (it sucks)
-
-// Implicit requirement is that Uuid 
 #[derive(::bon::Builder)]
 #[builder(const)]
 pub struct Uuid {
@@ -21,18 +13,18 @@ pub struct Task {
 }
 
 pub struct TaskDescription {
-    value: aliases::string::String,
+    value: ::aliases::string::String,
 }
 
 #[::bon::bon]
 impl TaskDescription {
     #[builder(builder_type(vis = "pub"), on(_, into))]
-    fn new(value: aliases::string::String) -> ::core::result::Result<Self, TaskDescriptionError> {
+    fn new(value: ::aliases::string::String) -> ::core::result::Result<Self, TaskDescriptionError> {
         let value = Self::normalize(value);
         Self::validate(value).map(|value| Self { value })
     }
 
-    fn normalize(value: aliases::string::String) -> aliases::string::String {
+    fn normalize(value: ::aliases::string::String) -> ::aliases::string::String {
         match value {
             ::std::borrow::Cow::Borrowed(value) => {
                 let trimmed = value.trim();
@@ -52,7 +44,7 @@ impl TaskDescription {
         }
     }
 
-    fn validate(value: aliases::string::String) -> ::core::result::Result<aliases::string::String, TaskDescriptionError> {
+    fn validate(value: ::aliases::string::String) -> ::core::result::Result<::aliases::string::String, TaskDescriptionError> {
         if value.len() < Self::MIN_EXPECTED_LENGTH {
             ::core::result::Result::Err(TaskDescriptionError::LengthUnderflow {
                 actual: value.len() as usize,
@@ -84,7 +76,7 @@ pub enum TaskDescriptionError {
 }
 
 impl ::core::ops::Deref for TaskDescription {
-    type Target = aliases::string::String;
+    type Target = ::aliases::string::String;
     
     fn deref(&self) -> &Self::Target {
         &self.value
