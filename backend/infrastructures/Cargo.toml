@@ -11,9 +11,13 @@ aliases = { path = "../aliases" }
 domain = { path = "../core/domain" }
 use-cases = { path = "../core/use-cases" }
 
+anyhow = { workspace = true }
 async-trait = { workspace = true }
 bon = { workspace = true }
 chrono = { workspace = true }
+
+tokio = { version = "1.47.1", features = ["sync"] }
+uuid = { version = "1.18.1", features = ["v7"] }
 
 [lints]
 workspace = true

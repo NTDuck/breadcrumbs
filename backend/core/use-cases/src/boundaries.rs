@@ -8,7 +8,7 @@ pub trait CreateTaskBoundary: ::core::marker::Send + ::core::marker::Sync {
 }
 
 #[derive(::bon::Builder)]
-#[builder(on(_, into))]
+#[builder(on(::aliases::string::String, into))]
 pub struct CreateTaskRequest {
     pub task_description: ::aliases::string::String,
 }
@@ -45,7 +45,6 @@ pub trait ViewTasksBoundary: ::core::marker::Send + ::core::marker::Sync {
 }
 
 #[derive(::bon::Builder)]
-#[builder(on(_, into))]
 pub struct ViewTasksRequest {
     pub pagination_request: PaginationRequest,
 }
@@ -78,7 +77,7 @@ pub mod models {
         pub(crate) async fn assemble(self: ::std::sync::Arc<Self>, task: ::domain::Task) -> ::aliases::result::Fallible<Task> {
             let task = Task::builder()
                 .id(::std::sync::Arc::clone(&self.uuid_formatter).format(&task.id).await?)
-                .description(task.description.clone())
+                .description(task.description.to_string())
                 .status(task.status.into())
                 .created_at(::std::sync::Arc::clone(&self.uuid_generator).get_timestamp(&task.id).await?)
                 .build();

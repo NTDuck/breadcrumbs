@@ -1,10 +1,23 @@
-#[derive(::bon::Builder)]
-#[builder(const)]
-pub struct Uuid {
-    #[allow(dead_code)]
-    value: [u8; 16],
+#[derive(::core::clone::Clone, ::core::marker::Copy, ::core::cmp::Eq, ::core::cmp::PartialEq, ::core::cmp::Ord, ::core::cmp::PartialOrd)]
+pub struct Uuid([u8; 16]);
+
+#[::bon::bon]
+impl Uuid {
+    #[builder]
+    pub fn new(value: [u8; 16]) -> Self {
+        Self(value)
+    }
 }
 
+impl ::core::ops::Deref for Uuid {
+    type Target = [u8; 16];
+    
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+#[derive(::core::clone::Clone)]
 #[derive(::bon::Builder)]
 pub struct Task {
     pub id: Uuid,
@@ -12,16 +25,15 @@ pub struct Task {
     pub status: TaskStatus,
 }
 
-pub struct TaskDescription {
-    value: ::aliases::string::String,
-}
+#[derive(::core::clone::Clone)]
+pub struct TaskDescription(::aliases::string::String);
 
 #[::bon::bon]
 impl TaskDescription {
-    #[builder(builder_type(vis = "pub"), on(_, into))]
-    fn new(value: ::aliases::string::String) -> ::core::result::Result<Self, TaskDescriptionError> {
+    #[builder(on(::aliases::string::String, into))]
+    pub fn new(value: ::aliases::string::String) -> ::core::result::Result<Self, TaskDescriptionError> {
         let value = Self::normalize(value);
-        Self::validate(value).map(|value| Self { value })
+        Self::validate(value).map(Self)
     }
 
     fn normalize(value: ::aliases::string::String) -> ::aliases::string::String {
@@ -46,15 +58,19 @@ impl TaskDescription {
 
     fn validate(value: ::aliases::string::String) -> ::core::result::Result<::aliases::string::String, TaskDescriptionError> {
         if value.len() < Self::MIN_EXPECTED_LENGTH {
-            ::core::result::Result::Err(TaskDescriptionError::LengthUnderflow {
-                actual: value.len() as usize,
-                min_expected: Self::MIN_EXPECTED_LENGTH,
-            })
+            let error = TaskDescriptionError::underflow()
+                .length(value.len())
+                .build();
+
+            ::core::result::Result::Err(error)
+
         } else if value.len() > Self::MAX_EXPECTED_LENGTH {
-            ::core::result::Result::Err(TaskDescriptionError::LengthOverflow {
-                actual: value.len() as usize,
-                max_expected: Self::MAX_EXPECTED_LENGTH,
-            })
+            let error = TaskDescriptionError::overflow()
+                .length(value.len())
+                .build();
+
+            ::core::result::Result::Err(error)
+
         } else {
             ::core::result::Result::Ok(value)
         }
@@ -62,6 +78,14 @@ impl TaskDescription {
 
     const MIN_EXPECTED_LENGTH: usize = 1;
     const MAX_EXPECTED_LENGTH: usize = 1024;
+}
+
+impl ::core::ops::Deref for TaskDescription {
+    type Target = ::aliases::string::String;
+    
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }
 
 pub enum TaskDescriptionError {
@@ -75,14 +99,26 @@ pub enum TaskDescriptionError {
     },
 }
 
-impl ::core::ops::Deref for TaskDescription {
-    type Target = ::aliases::string::String;
-    
-    fn deref(&self) -> &Self::Target {
-        &self.value
+#[::bon::bon]
+impl TaskDescriptionError {
+    #[builder(finish_fn = build)]
+    pub fn underflow(length: usize) -> Self {
+        Self::LengthUnderflow {
+            actual: length,
+            min_expected: TaskDescription::MIN_EXPECTED_LENGTH,
+        }
+    }
+
+    #[builder(finish_fn = build)]
+    pub fn overflow(length: usize) -> Self {
+        Self::LengthOverflow {
+            actual: length,
+            max_expected: TaskDescription::MAX_EXPECTED_LENGTH,
+        }
     }
 }
 
+#[derive(::core::clone::Clone, ::core::marker::Copy)]
 pub enum TaskStatus {
     Pending,
     InProgress,
