@@ -4,8 +4,8 @@ use crate::gateways::*;
 
 #[derive(::bon::Builder)]
 pub struct CreateTaskInteractor {
-    uuid_generator: ::std::sync::Arc<dyn UuidGenerator>,
-    task_repository: ::std::sync::Arc<dyn TaskRepository>,
+    uuid_generator: ::std::sync::Arc<dyn UuidGenerator + ::core::marker::Send + ::core::marker::Sync>,
+    task_repository: ::std::sync::Arc<dyn TaskRepository + ::core::marker::Send + ::core::marker::Sync>,
 }
 
 #[async_trait]
@@ -35,7 +35,7 @@ impl CreateTaskBoundary for CreateTaskInteractor {
 }
 
 pub struct ViewTasksInteractor {
-    task_repository: ::std::sync::Arc<dyn TaskRepository>,
+    task_repository: ::std::sync::Arc<dyn TaskRepository + ::core::marker::Send + ::core::marker::Sync>,
 
     task_assembler: ::std::sync::Arc<models::TaskAssembler>,
 }
@@ -44,9 +44,9 @@ pub struct ViewTasksInteractor {
 impl ViewTasksInteractor {
     #[builder(builder_type(vis = "pub"))]
     fn new(
-        uuid_generator: ::std::sync::Arc<dyn UuidGenerator>,
-        uuid_formatter: ::std::sync::Arc<dyn UuidFormatter>,
-        task_repository: ::std::sync::Arc<dyn TaskRepository>,
+        uuid_generator: ::std::sync::Arc<dyn UuidGenerator + ::core::marker::Send + ::core::marker::Sync>,
+        uuid_formatter: ::std::sync::Arc<dyn UuidFormatter + ::core::marker::Send + ::core::marker::Sync>,
+        task_repository: ::std::sync::Arc<dyn TaskRepository + ::core::marker::Send + ::core::marker::Sync>,
     ) -> Self {
         Self {
             task_repository,

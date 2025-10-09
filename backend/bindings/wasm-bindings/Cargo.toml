@@ -16,6 +16,8 @@ bon = { workspace = true }
 
 # [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen = "=0.2.102"  # jsr:@deno/wasmbuild@0.19.3
+serde-wasm-bindgen = "0.6.5"
+serde = { version = "1.0.228", features = ["derive"] }
 
 [lib]
 crate-type = ["cdylib"]

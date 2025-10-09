@@ -3,7 +3,7 @@ use ::async_trait::async_trait;
 use crate::utils::{pagination::{PaginationRequest, PaginationResponse}};
 
 #[async_trait]
-pub trait CreateTaskBoundary: ::core::marker::Send + ::core::marker::Sync {
+pub trait CreateTaskBoundary {
     async fn apply(self: ::std::sync::Arc<Self>, request: CreateTaskRequest) -> ::aliases::result::Fallible<CreateTaskResponse>;
 }
 
@@ -40,7 +40,7 @@ impl ::core::convert::From<::domain::TaskDescriptionError> for CreateTaskErrResp
 }
 
 #[async_trait]
-pub trait ViewTasksBoundary: ::core::marker::Send + ::core::marker::Sync {
+pub trait ViewTasksBoundary {
     async fn apply(self: ::std::sync::Arc<Self>, request: ViewTasksRequest) -> ::aliases::result::Fallible<ViewTasksResponse>;
 }
 
@@ -69,8 +69,8 @@ pub mod models {
 
     #[derive(::bon::Builder)]
     pub(crate) struct TaskAssembler {
-        uuid_generator: ::std::sync::Arc<dyn UuidGenerator>,
-        uuid_formatter: ::std::sync::Arc<dyn UuidFormatter>,
+        uuid_generator: ::std::sync::Arc<dyn UuidGenerator + ::core::marker::Send + ::core::marker::Sync>,
+        uuid_formatter: ::std::sync::Arc<dyn UuidFormatter + ::core::marker::Send + ::core::marker::Sync>,
     }
 
     impl TaskAssembler {
