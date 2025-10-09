@@ -19,5 +19,10 @@ chrono = { workspace = true }
 tokio = { version = "1.47.1", features = ["sync"] }
 uuid = { version = "1.18.1", features = ["v7"] }
 
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# Using `uuid` on `wasm32-unknown-unknown` requires
+# a source of randomness from [`js`, `rng-getrandom`, `rng-rand`]
+uuid = { version = "1.18.1", features = ["v7", "js"] }
+
 [lints]
 workspace = true

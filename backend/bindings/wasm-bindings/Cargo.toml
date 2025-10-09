@@ -12,6 +12,9 @@ domain = { path = "../../core/domain" }
 use-cases = { path = "../../core/use-cases" }
 infrastructures = { path = "../../infrastructures" }
 
+bon = { workspace = true }
+
+# [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen = "=0.2.102"  # jsr:@deno/wasmbuild@0.19.3
 
 [lib]

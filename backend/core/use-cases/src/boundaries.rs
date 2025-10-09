@@ -69,8 +69,8 @@ pub mod models {
 
     #[derive(::bon::Builder)]
     pub(crate) struct TaskAssembler {
-        uuid_generator: ::std::sync::Arc<dyn UuidGenerator + ::core::marker::Send + ::core::marker::Sync>,
-        uuid_formatter: ::std::sync::Arc<dyn UuidFormatter + ::core::marker::Send + ::core::marker::Sync>,
+        uuid_generator: ::std::sync::Arc<dyn UuidGenerator>,
+        uuid_formatter: ::std::sync::Arc<dyn UuidFormatter>,
     }
 
     impl TaskAssembler {
