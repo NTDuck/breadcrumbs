@@ -1,4 +1,5 @@
 use ::use_cases::gateways::*;
+use ::use_cases::boundaries as boundaries;
 use ::use_cases::boundaries::*;
 use ::use_cases::interactors::*;
 use ::infrastructures::*;
@@ -45,39 +46,79 @@ impl Application {
             .build()
     }
 
-    #[wasm_bindgen(js_name = createTask)]
-    pub fn create_task(&self, request: JsValue) -> JsValue {
-        JsValue::null()
-    }
+    // #[wasm_bindgen(js_name = createTask)]
+    // pub async fn create_task(&self, request: CreateTaskRequest) -> Fallible<CreateTaskResponse> {
+    //     let request = request.into();
+    //     let response = ::std::sync::Arc::clone(&self.create_task_boundary).apply(request).await?
+    //         .map_err(::core::convert::Into::into);
 
-    #[wasm_bindgen(js_name = viewTasks)]
-    pub fn view_tasks(&self, request: JsValue) -> JsValue {
-        JsValue::null()
-    }
+    //     Fallible::Ok(response)
+    // }
+
+    // #[wasm_bindgen(js_name = viewTasks)]
+    // pub fn view_tasks(&self, request: JsValue) -> JsValue {
+    //     JsValue::null()
+    // }
 }
+
+
 
 #[wasm_bindgen(getter_with_clone)]
 pub struct CreateTaskRequest {
     pub task_description: String,
 }
 
+impl ::core::convert::From<CreateTaskRequest> for boundaries::CreateTaskRequest {
+    fn from(request: CreateTaskRequest) -> Self {
+        Self::builder()
+            .task_description(request.task_description)
+            .build()
+    }
+}
+
 pub type CreateTaskResponse = ::core::result::Result<CreateTaskOkResponse, CreateTaskErrResponse>;
 
 pub type CreateTaskOkResponse = ();
 
-#[wasm_bindgen(getter_with_clone)]
-pub enum CreateTaskErrResponse {
-    // TaskDescriptionLengthUnderflow {
-    //     actual: usize,
-    //     min_expected: usize,
-    // },
-    // TaskDescriptionLengthOverflow {
-    //     actual: usize,
-    //     max_expected: usize,
-    // },
-    TaskDescriptionLengthUnderflow,
-    TaskDescriptionLengthOverflow,
+#[wasm_bindgen]
+#[derive(::bon::Builder)]
+pub struct CreateTaskErrResponse {
+    pub underflow: ::core::option::Option<CreateTaskErrResponse_TaskDescriptionLengthUnderflow>,
+    pub overflow: ::core::option::Option<CreateTaskErrResponse_TaskDescriptionLengthOverflow>,
 }
+
+impl ::core::convert::From<boundaries::CreateTaskErrResponse> for CreateTaskErrResponse {
+    fn from(response: boundaries::CreateTaskErrResponse) -> Self {
+        match response {
+            boundaries::CreateTaskErrResponse::TaskDescriptionLengthUnderflow { actual, min_expected }
+                 => Self::builder()
+                        .underflow(CreateTaskErrResponse_TaskDescriptionLengthUnderflow { actual, min_expected })
+                        .build(),
+            boundaries::CreateTaskErrResponse::TaskDescriptionLengthOverflow { actual, max_expected }
+                => Self::builder()
+                        .overflow(CreateTaskErrResponse_TaskDescriptionLengthOverflow { actual, max_expected })
+                        .build(),
+        }
+    }
+}
+
+#[allow(non_camel_case_types)]
+#[wasm_bindgen]
+#[derive(::core::clone::Clone, ::core::marker::Copy)]
+pub struct CreateTaskErrResponse_TaskDescriptionLengthUnderflow {
+    pub actual: usize,
+    pub min_expected: usize,
+}
+
+#[allow(non_camel_case_types)]
+#[wasm_bindgen]
+#[derive(::core::clone::Clone, ::core::marker::Copy)]
+pub struct CreateTaskErrResponse_TaskDescriptionLengthOverflow {
+    pub actual: usize,
+    pub max_expected: usize,
+}
+
+pub type Fallible<T = ()> = ::core::result::Result<T, JsValue>;
 
 pub mod models {
     use ::use_cases::boundaries::models as boundaries;
