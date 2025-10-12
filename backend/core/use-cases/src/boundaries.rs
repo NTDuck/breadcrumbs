@@ -17,10 +17,9 @@ pub struct CreateTaskRequest {
 }
 
 pub type CreateTaskResponse = ::core::result::Result<CreateTaskOkResponse, CreateTaskErrResponse>;
-
 pub type CreateTaskOkResponse = ();
 
-#[derive(::core::fmt::Debug, ::core::clone::Clone, ::core::marker::Copy)]
+#[derive(::core::fmt::Debug, ::core::clone::Clone)]
 #[derive(::thiserror::Error)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "kebab-case", rename_all_fields = "kebab-case"))]
@@ -52,20 +51,43 @@ impl ::core::convert::From<::domain::TaskDescriptionError> for CreateTaskErrResp
 }
 
 #[async_trait]
-pub trait ViewTasksBoundary {
-    async fn apply(self: ::std::sync::Arc<Self>, request: ViewTasksRequest) -> ::aliases::result::Fallible<ViewTasksResponse>;
+pub trait RemoveTaskBoundary {
+    async fn apply(self: ::std::sync::Arc<Self>, request: RemoveTaskRequest) -> ::aliases::result::Fallible<RemoveTaskResponse>;
 }
 
-#[derive(::core::fmt::Debug, ::core::clone::Clone, ::core::marker::Copy)]
+#[derive(::core::fmt::Debug, ::core::clone::Clone)]
 #[derive(::bon::Builder)]
+#[builder(on(::aliases::string::String, into))]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 #[cfg_attr(feature = "wasm-bindings", derive(::tsify::Tsify))]
 #[cfg_attr(feature = "wasm-bindings", tsify(from_wasm_abi, into_wasm_abi))]
-pub struct ViewTasksRequest {
-    pub pagination_request: models::pagination::PaginationRequest,
+pub struct RemoveTaskRequest {
+    pub task_id: ::aliases::string::String,
 }
 
+pub type RemoveTaskResponse = ::core::result::Result<RemoveTaskOkResponse, RemoveTaskErrResponse>;
+pub type RemoveTaskOkResponse = ();
+
+#[derive(::core::fmt::Debug, ::core::clone::Clone)]
+#[derive(::thiserror::Error)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "kebab-case", rename_all_fields = "kebab-case"))]
+#[cfg_attr(feature = "wasm-bindings", derive(::tsify::Tsify))]
+#[cfg_attr(feature = "wasm-bindings", tsify(from_wasm_abi, into_wasm_abi))]
+pub enum RemoveTaskErrResponse {
+    #[error("Task with ID {task_id} not found")]
+    TaskNotFound {
+        task_id: ::aliases::string::String,
+    },
+}
+
+#[async_trait]
+pub trait ViewTasksBoundary {
+    async fn apply(self: ::std::sync::Arc<Self>, request: ViewTasksRequest) -> ::aliases::result::Fallible<ViewTasksResponse>;
+}
+
+pub type ViewTasksRequest = models::pagination::PaginationRequest;
 pub type ViewTasksResponse = models::pagination::PaginationResponse<self::models::Task>;
 
 pub mod models {
@@ -89,13 +111,13 @@ pub mod models {
     #[derive(::bon::Builder)]
     pub(crate) struct TaskAssembler {
         uuid_generator: ::std::sync::Arc<dyn UuidGenerator + ::core::marker::Send + ::core::marker::Sync>,
-        uuid_formatter: ::std::sync::Arc<dyn UuidFormatter + ::core::marker::Send + ::core::marker::Sync>,
+        uuid_codec: ::std::sync::Arc<dyn UuidCodec + ::core::marker::Send + ::core::marker::Sync>,
     }
 
     impl TaskAssembler {
         pub(crate) async fn assemble(self: ::std::sync::Arc<Self>, task: ::domain::Task) -> ::aliases::result::Fallible<Task> {
             let task = Task::builder()
-                .id(::std::sync::Arc::clone(&self.uuid_formatter).format(&task.id).await?)
+                .id(::std::sync::Arc::clone(&self.uuid_codec).format(task.id).await?)
                 .description(task.description.to_string())
                 .status(task.status.into())
                 .created_at(::std::sync::Arc::clone(&self.uuid_generator).get_timestamp(&task.id).await?)

@@ -2,16 +2,14 @@ import { app } from "$lib";
 import type { PageLoad } from "$types";
 
 // SPA
-// export const ssr: boolean = false;
-// export const prerender: boolean = false;
+export const ssr: boolean = false;
+export const prerender: boolean = false;
 
 export const load: PageLoad = async () => {
   return {
     tasksPaginationResponse: await app.viewTasks({
-      paginationRequest: {
-        pageNumber: 1,
-        maxPageSize: 44,
-      },
+      pageNumber: 1,
+      maxPageSize: 44,
     }),
   };
 };

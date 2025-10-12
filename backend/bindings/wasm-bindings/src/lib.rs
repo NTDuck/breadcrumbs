@@ -11,6 +11,8 @@ pub struct Application {
     #[wasm_bindgen(skip)]
     create_task_boundary: ::std::sync::Arc<dyn CreateTaskBoundary + ::core::marker::Send + ::core::marker::Sync>,
     #[wasm_bindgen(skip)]
+    remove_task_boundary: ::std::sync::Arc<dyn RemoveTaskBoundary + ::core::marker::Send + ::core::marker::Sync>,
+    #[wasm_bindgen(skip)]
     view_tasks_boundary: ::std::sync::Arc<dyn ViewTasksBoundary + ::core::marker::Send + ::core::marker::Sync>,
 }
 
@@ -21,7 +23,7 @@ impl Application {
     pub fn new() -> Self {
         Self::new_from_gateways()
             .uuid_generator(::std::sync::Arc::new(UuidV7Generator::builder().build()))
-            .uuid_formatter(::std::sync::Arc::new(LowerUrnUuidFormatter::builder().build()))
+            .uuid_codec(::std::sync::Arc::new(LowerUrnUuidCodec::builder().build()))
             .task_repository(::std::sync::Arc::new(InMemoryTaskRepository::builder().build()))
             .build()
     }
@@ -29,7 +31,7 @@ impl Application {
     #[builder(finish_fn = build)]
     fn new_from_gateways(
         uuid_generator: ::std::sync::Arc<dyn UuidGenerator + ::core::marker::Send + ::core::marker::Sync>,
-        uuid_formatter: ::std::sync::Arc<dyn UuidFormatter + ::core::marker::Send + ::core::marker::Sync>,
+        uuid_codec: ::std::sync::Arc<dyn UuidCodec + ::core::marker::Send + ::core::marker::Sync>,
         task_repository: ::std::sync::Arc<dyn TaskRepository + ::core::marker::Send + ::core::marker::Sync>,
     ) -> Self {
         Self::builder()
@@ -37,9 +39,13 @@ impl Application {
                 .uuid_generator(::std::sync::Arc::clone(&uuid_generator))
                 .task_repository(::std::sync::Arc::clone(&task_repository))
                 .build()))
+            .remove_task_boundary(::std::sync::Arc::new(RemoveTaskInteractor::builder()
+                .uuid_codec(::std::sync::Arc::clone(&uuid_codec))
+                .task_repository(::std::sync::Arc::clone(&task_repository))
+                .build()))
             .view_tasks_boundary(::std::sync::Arc::new(ViewTasksInteractor::builder()
                 .uuid_generator(::std::sync::Arc::clone(&uuid_generator))
-                .uuid_formatter(::std::sync::Arc::clone(&uuid_formatter))
+                .uuid_codec(::std::sync::Arc::clone(&uuid_codec))
                 .task_repository(::std::sync::Arc::clone(&task_repository))
                 .build()))
             .build()
@@ -48,6 +54,11 @@ impl Application {
     #[wasm_bindgen(js_name = createTask)]
     pub async fn create_task(&self, request: CreateTaskRequest) -> JsPromise<CreateTaskOkResponse> {
         NestedFallibleExt::into_js(::std::sync::Arc::clone(&self.create_task_boundary).apply(request).await)
+    }
+    
+    #[wasm_bindgen(js_name = removeTask)]
+    pub async fn remove_task(&self, request: RemoveTaskRequest) -> JsPromise<RemoveTaskOkResponse> {
+        NestedFallibleExt::into_js(::std::sync::Arc::clone(&self.remove_task_boundary).apply(request).await)
     }
 
     #[wasm_bindgen(js_name = viewTasks)]
