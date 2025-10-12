@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { PageProps } from "$types";
+  import { Trash2 } from "lucide-svelte";
 
   let { data }: PageProps = $props();
 </script>
@@ -22,7 +23,7 @@
         <input type="hidden" name="task-id" value={task.id}/>
         <span>{task.description} ({task.status})</span>
         <span><i>[{task.id}]</i></span>
-        <button>Delete</button>
+        <button><Trash2 /></button>
       </form>
     </li>
   {/each}
