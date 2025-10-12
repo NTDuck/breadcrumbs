@@ -9,15 +9,17 @@ publish.workspace = true
 [dependencies]
 aliases = { path = "../../aliases" }
 domain = { path = "../../core/domain" }
-use-cases = { path = "../../core/use-cases" }
+use-cases = { path = "../../core/use-cases", features = ["wasm-bindings"] }
 infrastructures = { path = "../../infrastructures" }
 
 bon = { workspace = true }
 
 # [target.'cfg(target_arch = "wasm32")'.dependencies]
-wasm-bindgen = "=0.2.102"  # jsr:@deno/wasmbuild@0.19.3
+wasm-bindgen = { version = "=0.2.102", features = ["strict-macro"] }  # jsr:@deno/wasmbuild@0.19.3
+wasm-bindgen-futures = "=0.4.52"  # jsr:@deno/wasmbuild@0.19.3
 serde-wasm-bindgen = "0.6.5"
-serde = { version = "1.0.228", features = ["derive"] }
+serde = { workspace = true }
+tsify = { version = "0.5.5", features = ["js"], default-features = false }
 
 [lib]
 crate-type = ["cdylib"]

@@ -22,8 +22,10 @@ publish = false
 anyhow = "1.0.100"
 async-trait = "0.1.89"
 bon = "3.8.1"
-chrono = "0.4.42"
+chrono = { version = "0.4.42", features = ["serde"] }
 futures = "0.3.31"
+serde = { version = "1.0.228", features = ["derive"] }
+thiserror = "2.0.17"
 
 # Crates that we choose to marry
 # See: https://blessed.rs/crates

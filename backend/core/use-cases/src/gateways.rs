@@ -1,7 +1,6 @@
 use ::async_trait::async_trait;
 
-use crate::utils::pagination::PaginationRequest;
-use crate::utils::pagination::PaginationResponse;
+use crate::boundaries::models::pagination::*;
 
 #[async_trait]
 pub trait UuidGenerator {

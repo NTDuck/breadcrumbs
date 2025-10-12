@@ -1,6 +1,6 @@
 use ::async_trait::async_trait;
 use ::use_cases::gateways::*;
-use ::use_cases::utils::pagination::*;
+use ::use_cases::boundaries::models::pagination::*;
 
 pub struct UuidV7Generator;
 
