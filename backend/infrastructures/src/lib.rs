@@ -1,3 +1,5 @@
+use std::convert;
+
 use ::async_trait::async_trait;
 use ::use_cases::gateways::*;
 use ::use_cases::boundaries::models::pagination::*;
@@ -34,12 +36,21 @@ impl UuidGenerator for UuidV7Generator {
 
                 match timestamp {
                     ::core::option::Option::Some(timestamp) => ::aliases::result::Fallible::Ok(timestamp.naive_local()),
-                    ::core::option::Option::None => ::aliases::result::Fallible::Err(::anyhow::anyhow!("Out-of-range number of seconds and/or invalid nanosecond")),
+                    ::core::option::Option::None => ::aliases::result::Fallible::Err(UuidV7GeneratorGetTimestampError::OutOfRange.into()),
                 }
             }
-            ::core::option::Option::None => ::aliases::result::Fallible::Err(::anyhow::anyhow!("Incorrect UUID version (must be v1, v6, or v7)")),
+            ::core::option::Option::None => ::aliases::result::Fallible::Err(UuidV7GeneratorGetTimestampError::IncompatibleUuidVersion { version: uuid.get_version_num() }.into()),
         }
     }
+}
+
+#[derive(::core::fmt::Debug, ::core::clone::Clone, ::core::marker::Copy)]
+#[derive(::thiserror::Error)]
+enum UuidV7GeneratorGetTimestampError {
+    #[error("Incompatible UUID version (expected v1, v6, or v7, found v{version})")]
+    IncompatibleUuidVersion { version: usize },
+    #[error("Out-of-range number of seconds and/or invalid nanosecond")]
+    OutOfRange,
 }
 
 pub struct LowerUrnUuidFormatter;
