@@ -21,4 +21,10 @@ export const actions = {
       taskDescription: formData.get("task-description"),
     });
   },
+  delete: async ({ request }) => {
+    const formData = await request.formData();
+    await app.removeTask({
+      taskId: formData.get("task-id"),
+    });
+  },
 }

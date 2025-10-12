@@ -18,8 +18,12 @@
 
   {#each data.tasksPaginationResponse.items as task (task.id)}
     <li>
-      <span>{task.description} ({task.status})</span>
-      <span><i>[{task.id}]</i></span>
+      <form method="POST" action="?/delete">
+        <input type="hidden" name="task-id" value={task.id}/>
+        <span>{task.description} ({task.status})</span>
+        <span><i>[{task.id}]</i></span>
+        <button>Delete</button>
+      </form>
     </li>
   {/each}
 </ul>
