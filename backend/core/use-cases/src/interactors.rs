@@ -64,6 +64,6 @@ impl ViewTasksBoundary for ViewTasksInteractor {
         let tasks = ::std::sync::Arc::clone(&self.task_repository).show(request.pagination_request).await?;
         let tasks = tasks.map(|task| ::std::sync::Arc::clone(&self.task_assembler).assemble(task)).await?;
 
-        ::aliases::result::Fallible::Ok(ViewTasksResponse::builder().tasks(tasks).build())
+        ::aliases::result::Fallible::Ok(tasks)
     }
 }

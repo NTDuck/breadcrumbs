@@ -66,15 +66,7 @@ pub struct ViewTasksRequest {
     pub pagination_request: models::pagination::PaginationRequest,
 }
 
-#[derive(::core::fmt::Debug, ::core::clone::Clone)]
-#[derive(::bon::Builder)]
-#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
-#[cfg_attr(feature = "wasm-bindings", derive(::tsify::Tsify))]
-#[cfg_attr(feature = "wasm-bindings", tsify(from_wasm_abi, into_wasm_abi))]
-pub struct ViewTasksResponse {
-    pub tasks: models::pagination::PaginationResponse<self::models::Task>,
-}
+pub type ViewTasksResponse = models::pagination::PaginationResponse<self::models::Task>;
 
 pub mod models {
     use crate::gateways::*;

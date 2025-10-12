@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PageProps } from "./$types";
+  import type { PageProps } from "$types";
 
   let { data }: PageProps = $props();
 </script>
@@ -14,9 +14,12 @@
 </form>
 
 <ul>
+  <h3>Page {data.tasksPaginationResponse.pageNumber ?? "?"} of {data.tasksPaginationResponse.maxPageNumber ?? "?"}</h3>
+
   {#each data.tasksPaginationResponse.items as task (task.id)}
     <li>
-      <span>{task.description}</span>
+      <span>{task.description} ({task.status})</span>
+      <span><i>[{task.id}]</i></span>
     </li>
   {/each}
 </ul>
