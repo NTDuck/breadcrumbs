@@ -7,10 +7,10 @@ export const prerender: boolean = false;
 
 export const load: PageLoad = async () => {
   return {
-    tasks: await app.viewTasks({
+    tasksPaginationResponse: await app.viewTasks({
       paginationRequest: {
         pageNumber: 1,
-        maxPageSize: Number.MAX_SAFE_INTEGER,
+        maxPageSize: 44,
       },
     }),
   };
