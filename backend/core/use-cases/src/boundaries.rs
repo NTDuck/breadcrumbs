@@ -6,8 +6,8 @@ pub trait CreateTaskBoundary {
 }
 
 #[derive(::core::fmt::Debug, ::core::clone::Clone)]
-#[cfg_attr(feature = "bon", derive(::bon::Builder))]
-#[cfg_attr(feature = "bon", builder(on(::aliases::string::String, into)))]
+#[derive(::bon::Builder)]
+#[builder(on(::aliases::string::String, into))]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 #[cfg_attr(feature = "wasm-bindings", derive(::tsify::Tsify))]
@@ -20,7 +20,8 @@ pub type CreateTaskResponse = ::core::result::Result<CreateTaskOkResponse, Creat
 
 pub type CreateTaskOkResponse = ();
 
-#[derive(::core::fmt::Debug, ::thiserror::Error)]
+#[derive(::core::fmt::Debug, ::core::clone::Clone, ::core::marker::Copy)]
+#[derive(::thiserror::Error)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "kebab-case", rename_all_fields = "kebab-case"))]
 #[cfg_attr(feature = "wasm-bindings", derive(::tsify::Tsify))]
@@ -55,7 +56,8 @@ pub trait ViewTasksBoundary {
     async fn apply(self: ::std::sync::Arc<Self>, request: ViewTasksRequest) -> ::aliases::result::Fallible<ViewTasksResponse>;
 }
 
-#[derive(::core::fmt::Debug, ::bon::Builder)]
+#[derive(::core::fmt::Debug, ::core::clone::Clone, ::core::marker::Copy)]
+#[derive(::bon::Builder)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 #[cfg_attr(feature = "wasm-bindings", derive(::tsify::Tsify))]
@@ -64,7 +66,8 @@ pub struct ViewTasksRequest {
     pub pagination_request: models::pagination::PaginationRequest,
 }
 
-#[derive(::core::fmt::Debug, ::bon::Builder)]
+#[derive(::core::fmt::Debug, ::core::clone::Clone)]
+#[derive(::bon::Builder)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 #[cfg_attr(feature = "wasm-bindings", derive(::tsify::Tsify))]
@@ -74,7 +77,7 @@ pub struct ViewTasksResponse {
 }
 
 pub mod models {
-    use crate::{gateways::{UuidFormatter, UuidGenerator}};
+    use crate::gateways::*;
 
     #[derive(::core::fmt::Debug, ::core::clone::Clone)]
     #[derive(::bon::Builder)]

@@ -8,7 +8,6 @@ publish.workspace = true
 
 [features]
 default = ["serde"]
-bon = ["dep:bon", "domain/bon"]
 wasm-bindings = ["dep:tsify", "dep:wasm-bindgen"]
 
 [dependencies]
@@ -16,7 +15,7 @@ aliases = { path = "../../aliases" }
 domain = { path = "../domain" }
 
 async-trait = { workspace = true }
-bon = { workspace = true, optional = true }
+bon = { workspace = true }
 futures = { workspace = true }
 serde = { workspace = true, optional = true }
 tsify = { version = "0.5.5", features = ["js"], default-features = false, optional = true }

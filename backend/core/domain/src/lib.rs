@@ -1,9 +1,9 @@
 #[derive(::core::fmt::Debug, ::core::clone::Clone, ::core::marker::Copy, ::core::cmp::Eq, ::core::cmp::PartialEq, ::core::cmp::Ord, ::core::cmp::PartialOrd)]
 pub struct Uuid([u8; 16]);
 
-#[cfg_attr(feature = "bon", ::bon::bon)]
+#[::bon::bon]
 impl Uuid {
-    #[cfg_attr(feature = "bon", builder)]
+    #[builder]
     pub fn new(value: [u8; 16]) -> Self {
         Self(value)
     }
@@ -18,7 +18,7 @@ impl ::core::ops::Deref for Uuid {
 }
 
 #[derive(::core::fmt::Debug, ::core::clone::Clone)]
-#[cfg_attr(feature = "bon", derive(::bon::Builder))]
+#[derive(::bon::Builder)]
 pub struct Task {
     pub id: Uuid,
     pub description: TaskDescription,
@@ -28,9 +28,9 @@ pub struct Task {
 #[derive(::core::fmt::Debug, ::core::clone::Clone)]
 pub struct TaskDescription(::aliases::string::String);
 
-#[cfg_attr(feature = "bon", ::bon::bon)]
+#[::bon::bon]
 impl TaskDescription {
-    #[cfg_attr(feature = "bon", builder(on(::aliases::string::String, into)))]
+    #[builder(on(::aliases::string::String, into))]
     pub fn new(value: ::aliases::string::String) -> ::core::result::Result<Self, TaskDescriptionError> {
         let value = Self::normalize(value);
         Self::validate(value).map(Self)
