@@ -7,11 +7,11 @@
 
 <h1>Tasks</h1>
 
-<form method="POST" action="?/create">
+<form method="POST">
   <label>Description
     <input name="task-description" type="text"/>
   </label>
-  <button>Add</button>
+  <button formaction="?/create">Add</button>
 </form>
 
 <ul>
@@ -19,11 +19,11 @@
 
   {#each data.tasksPaginationResponse.items as task (task.id)}
     <li>
-      <form method="POST" action="?/delete">
+      <form method="POST">
         <input type="hidden" name="task-id" value={task.id}/>
         <span>{task.description} ({task.status})</span>
         <span><i>[{task.id}]</i></span>
-        <button><Trash2 /></button>
+        <button formaction="?/delete"><Trash2 /></button>
       </form>
     </li>
   {/each}

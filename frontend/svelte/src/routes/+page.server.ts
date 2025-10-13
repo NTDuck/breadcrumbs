@@ -1,16 +1,16 @@
 import { app } from "$lib";
-import type { PageLoad } from "$types";
+import { PaginationRequest } from "@breadcrumbs";
+import type { PageLoad, Actions } from "$types";
 
 // SPA
-export const ssr: boolean = false;
-export const prerender: boolean = false;
+// export const ssr: boolean = false;
+// export const prerender: boolean = false;
 
 export const load: PageLoad = async () => {
   return {
-    tasksPaginationResponse: await app.viewTasks({
-      pageNumber: 1,
-      maxPageSize: 44,
-    }),
+    tasksPaginationResponse: (await app.viewTasks({
+      paginationRequest: PaginationRequest.unbounded(),
+    })).paginationResponse,
   };
 };
 
@@ -27,4 +27,4 @@ export const actions = {
       taskId: formData.get("task-id"),
     });
   },
-}
+} satisfies Actions

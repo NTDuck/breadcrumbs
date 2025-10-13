@@ -1,4 +1,5 @@
 # breadcrumbs
+> inspired by [monkeytype](https://monkeytype.com).
 
 ## Deps
 - [Rust](https://rust-lang.org/tools/install/)

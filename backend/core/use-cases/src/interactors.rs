@@ -88,9 +88,11 @@ impl ViewTasksInteractor {
 #[async_trait]
 impl ViewTasksBoundary for ViewTasksInteractor {
     async fn apply(self: ::std::sync::Arc<Self>, request: ViewTasksRequest) -> ::aliases::result::Fallible<ViewTasksResponse> {
-        let tasks = ::std::sync::Arc::clone(&self.task_repository).show(request).await?;
+        let tasks = ::std::sync::Arc::clone(&self.task_repository).show(request.pagination_request).await?;
         let tasks = tasks.map(|task| ::std::sync::Arc::clone(&self.task_assembler).assemble(task)).await?;
 
-        ::aliases::result::Fallible::Ok(tasks)
+        ::aliases::result::Fallible::Ok(ViewTasksResponse::builder()
+            .pagination_response(tasks)
+            .build())
     }
 }

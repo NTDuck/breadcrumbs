@@ -87,8 +87,27 @@ pub trait ViewTasksBoundary {
     async fn apply(self: ::std::sync::Arc<Self>, request: ViewTasksRequest) -> ::aliases::result::Fallible<ViewTasksResponse>;
 }
 
-pub type ViewTasksRequest = models::pagination::PaginationRequest;
-pub type ViewTasksResponse = models::pagination::PaginationResponse<self::models::Task>;
+#[derive(::core::fmt::Debug, ::core::clone::Clone, ::core::marker::Copy)]
+#[derive(::bon::Builder)]
+#[builder(on(::aliases::string::String, into))]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "wasm-bindings", derive(::tsify::Tsify))]
+#[cfg_attr(feature = "wasm-bindings", tsify(from_wasm_abi, into_wasm_abi))]
+pub struct ViewTasksRequest {
+    pub pagination_request: models::pagination::PaginationRequest,
+}
+
+#[derive(::core::fmt::Debug, ::core::clone::Clone)]
+#[derive(::bon::Builder)]
+#[builder(on(::aliases::string::String, into))]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "wasm-bindings", derive(::tsify::Tsify))]
+#[cfg_attr(feature = "wasm-bindings", tsify(from_wasm_abi, into_wasm_abi))]
+pub struct ViewTasksResponse {
+    pub pagination_response: models::pagination::PaginationResponse<self::models::Task>,
+}
 
 pub mod models {
     use crate::gateways::*;
@@ -149,6 +168,9 @@ pub mod models {
     }
 
     pub mod pagination {
+        #[cfg(feature = "wasm-bindings")]
+        use ::wasm_bindgen::prelude::*;
+
         use ::futures::prelude::*;
 
         #[derive(::core::fmt::Debug, ::core::clone::Clone, ::core::marker::Copy)]
@@ -163,8 +185,22 @@ pub mod models {
             pub max_page_size: usize,
         }
 
+        #[cfg(not(feature = "wasm-bindings"))]
         impl PaginationRequest {
             pub const fn unbounded() -> Self {
+                Self::builder()
+                    .page_number(MIN_PAGE_NUMBER)
+                    .max_page_size(::core::usize::MAX)
+                    .build()
+            }
+        }
+        
+        #[cfg(feature = "wasm-bindings")]
+        #[wasm_bindgen]
+        impl PaginationRequest {
+            #[cfg(feature = "wasm-bindings")]
+            #[wasm_bindgen]
+            pub fn unbounded() -> Self {
                 Self::builder()
                     .page_number(MIN_PAGE_NUMBER)
                     .max_page_size(::core::usize::MAX)
