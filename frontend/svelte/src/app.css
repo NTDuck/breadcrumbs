@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
 /* https://www.skeleton.dev/docs/get-started/installation/sveltekit */
 @import "@skeletonlabs/skeleton";
 @import "@skeletonlabs/skeleton/optional/presets";
@@ -9,3 +12,7 @@
 
 /* https://fontsource.org/fonts/alegreya/install */
 @import "@fontsource-variable/alegreya";
+/* https://fontsource.org/fonts/roboto-mono/install */
+@import "@fontsource-variable/roboto-mono";
+/* https://fontsource.org/fonts/lexend-deca/install */
+@import "@fontsource-variable/lexend-deca";
